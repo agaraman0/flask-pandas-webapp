@@ -59,7 +59,7 @@ def dataseperation():
 
    zipObj.close()
 
-   return send_file(path + '/suffixMatabolite.zip')
+   return send_file(path + '/suffixMatabolite.zip',as_attachment=True,cache_timeout=0)
 
 # task 2 to create Retention time round off column
 @app.route('/dataRTroundoff')
@@ -69,7 +69,7 @@ def dataRTroundoff():
    data['Retention Time RoundOff'] = data.apply(nearestNaturalnum,axis=1)
    data.to_excel(path + '/dataRTroundoff.xlsx')
 
-   return send_file(path + '/dataRTroundoff.xlsx',as_attachment=True)
+   return send_file(path + '/dataRTroundoff.xlsx',as_attachment=True,cache_timeout=0)
 
 # task 3 to create mean matabolites of samples which have equal RT roundoff
 @app.route('/dataMeanRTsamples')
@@ -77,11 +77,11 @@ def dataMeanSamples():
    data = readxlsxfile('data.xlsx')
    data['Retention Time RoundOff'] = data.apply(nearestNaturalnum,axis=1)
    df = data.groupby('Retention Time RoundOff').mean()
-   df.drop(['m/z','Retention time (min)'],axis = 1)
+   df = df.drop(['m/z','Retention time (min)'],axis = 1)
 
-   data.to_excel(path + '/dataMeanRTsamples.xlsx')
+   df.to_excel(path + '/dataMeanRTsamples.xlsx')
 
-   return send_file(path + '/dataMeanRTsamples.xlsx',as_attachment=True)
+   return send_file(path + '/dataMeanRTsamples.xlsx',as_attachment=True, cache_timeout=0)
 
 # to render any excel file which is already present in our dir
 @app.route('/renderTemplate')
