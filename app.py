@@ -59,7 +59,7 @@ def dataseperation():
 
    zipObj.close()
 
-   return send_file(path + '/suffixMatabolite.zip',as_attachment=True)
+   return send_file(path + '/suffixMatabolite.zip')
 
 # task 2 to create Retention time round off column
 @app.route('/dataRTroundoff')
